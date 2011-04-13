@@ -14,7 +14,8 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = "wox"
 
-  s.add_dependency %w[thor plist]
+  s.add_dependency "thor"
+  s.add_dependency "plist"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
