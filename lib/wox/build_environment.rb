@@ -14,6 +14,7 @@ module Wox
     def initialize options
       options[:info_plist] ||= 'Resources/Info.plist'
       options[:version] ||= Plist::parse_xml(options[:info_plist])['CFBundleVersion']
+      options[:project_name] ||= xcodebuild_list.first.scan(/project\s\"([^\"]+)/i).flatten.first
       options[:build_dir] ||= 'build'
       options[:sdk] ||= 'iphoneos'
       options[:configuration] ||= 'Release'
@@ -25,7 +26,11 @@ module Wox
     end
     
     def project_name
-      @project_name ||= xcodebuild_list.first.scan(/project\s\"([^\"]+)/i).flatten.first
+      self[:project_name] 
+    end
+    
+    def read_version plist_file
+      
     end
     
     def version
