@@ -1,3 +1,5 @@
+require 'plist'
+
 module Wox
   module Environment
     attr_reader :environment
