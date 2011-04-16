@@ -18,6 +18,7 @@ module Wox
       options[:build_dir] ||= 'build'
       options[:sdk] ||= 'iphoneos'
       options[:configuration] ||= 'Release'
+      options[:target] ||= targets.first
       @options = options
     end
     
@@ -28,11 +29,7 @@ module Wox
     def project_name
       self[:project_name] 
     end
-    
-    def read_version plist_file
-      
-    end
-    
+        
     def version
       self[:version]
     end
@@ -49,6 +46,14 @@ module Wox
       @configurations ||= begin
         start_line = xcodebuild_list.find_index{ |l| l =~ /configurations/i } + 1
         end_line = xcodebuild_list.find_index{ |l| l =~ /if no/i } - 1
+        xcodebuild_list.slice start_line...end_line
+      end
+    end
+
+    def targets
+      @targets ||= begin
+        start_line = xcodebuild_list.find_index{ |l| l =~ /targets/i } + 1
+        end_line = xcodebuild_list.find_index{ |l| l =~ /configurations/i } - 1
         xcodebuild_list.slice start_line...end_line
       end
     end

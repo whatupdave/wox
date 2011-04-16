@@ -29,6 +29,11 @@ module Wox
         task :configurations do
           puts environment.configurations.join("\n")
         end
+        
+        desc "List project targets"
+        task :targets do
+          puts environment.targets.join("\n")
+        end
       end
     end
     
