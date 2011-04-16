@@ -62,6 +62,10 @@ module Wox
       fail "You need to specify :#{name} in Rakefile" unless @options[name]
       @options[name]
     end
+    
+    def has_entry? name
+      @options[name]
+    end
         
     def configuration_sym
       self[:configuration].gsub(' ', '_').downcase
