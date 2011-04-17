@@ -56,7 +56,8 @@ Ok so there's a few more things you can do, like creating ipa files and publishi
           testflight :publish, :api_token => 'nphsZ6nVXMl0brDEsevLY0wRfU6iP0NLaQH3nqoh8jG',
                                :team_token => 'Qfom2HnGGJnXrUVnOKAxKAmpNO3wdQ9panhtqcA',
                                :notes => proc { File.read("CHANGELOG") },
-                               :notify => 'Internal'
+                               :distribution_lists => %w[Internal QA],
+                               :notify => true
 
         end
       end

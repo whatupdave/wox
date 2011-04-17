@@ -60,7 +60,7 @@ module Wox
     
     def [](name)
       fail "You need to specify :#{name} in Rakefile" unless @options[name]
-      @options[name]
+      @options[name].respond_to?(:call) ? @options[name].call : @options[name]
     end
     
     def has_entry? name
