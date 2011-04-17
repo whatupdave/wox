@@ -3,9 +3,9 @@ module Wox
     include Environment
     
     def package
-      configuration, sdk, ipa_file, build_dir = environment[:configuration], environment[:sdk], environment.ipa_file, environment[:build_dir]
+      configuration, sdk, ipa_file, build_dir = environment[:configuration], environment[:sdk], environment[:ipa_file], environment[:build_dir]
 
-      app_file = File.join build_dir, "#{configuration}-#{sdk}", "#{environment.project_name}.app"
+      app_file = File.join build_dir, "#{configuration}-#{sdk}", "#{environment[:project_name]}.app"
       fail "Couldn't find #{app_file}" unless File.exists? app_file
     
       provisioning_profile_file = find_matching_mobile_provision environment[:provisioning_profile]

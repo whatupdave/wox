@@ -12,32 +12,31 @@ module Wox
     attr_reader :info_plist, :build_dir, :default_sdk
     
     def initialize options
+      @options = options
+      
       options[:info_plist] ||= 'Resources/Info.plist'
       options[:version] ||= Plist::parse_xml(options[:info_plist])['CFBundleVersion']
       options[:project_name] ||= xcodebuild_list.first.scan(/project\s\"([^\"]+)/i).flatten.first
+      options[:full_name] ||= "#{self[:project_name]} #{self[:version]}"
       options[:build_dir] ||= 'build'
       options[:sdk] ||= 'iphoneos'
       options[:configuration] ||= 'Release'
       options[:target] ||= targets.first
-      @options = options
+      
+      if options[:ipa_name]
+        options[:ipa_file] ||= File.join self[:build_dir], 
+                                [self[:project_name], self[:version], self[:configuration], self[:ipa_name]].join("-") + ".ipa"
+      end
     end
     
     def apply options, &block
       yield BuildEnvironment.new @options.merge(options)
     end
     
-    def project_name
-      self[:project_name] 
-    end
-        
     def version
       self[:version]
     end
-    
-    def full_name
-      "#{project_name} #{version}"
-    end
-    
+        
     def sdks
       @sdks ||= `xcodebuild -showsdks`.scan(/-sdk (.*?$)/m).flatten
     end
@@ -67,14 +66,6 @@ module Wox
       @options[name]
     end
         
-    def configuration_sym
-      self[:configuration].gsub(' ', '_').downcase
-    end
-    
-    def ipa_file
-      File.join self[:build_dir], "#{project_name}-#{version}-#{configuration_sym}-#{self[:ipa_name]}.ipa"
-    end
-    
     private
     
       def xcodebuild_list

@@ -8,36 +8,34 @@ module Wox
     def arg_to_string arg
       arg.respond_to?(:join) ? arg.join(",") : arg
     end
-    
-    def publish
-      ipa_file = environment.ipa_file
-      
+
+    def api_args
       args = { 
-        :file => "@#{ipa_file}",
+        :file => "@#{environment[:ipa_file]}",
         :api_token => environment[:api_token],
         :team_token => environment[:team_token],
         :notes => environment[:notes]
       }
       
-      if environment.has_entry? :distribution_lists
-        args[:distribution_lists] = arg_to_string environment[:distribution_lists]
-      end
-      
-      if environment.has_entry? :notify
-        args[:notify] = environment[:notify]
-      end
-      
-      arg_string = args.map {|k,v| "-F #{k}='#{v}'"}.join(" ")
-      
-      file_size_in_megabytes = bytes_to_human_size File.size?(ipa_file)
+      args[:distribution_lists] = environment[:distribution_lists].join(",") if environment.has_entry? :distribution_lists 
+      args[:notify] = environment[:notify] if environment.has_entry? :notify
+      args
+    end
+    
+    def curl_arg_string
+      api_args.map {|k,v| "-F #{k}='#{v}'"}.join(" ")
+    end
+    
+    def publish
+      ipa_file = environment[:ipa_file]
       
       puts "Publishing to TestFlight"
-      puts "File: #{ipa_file} (#{file_size_in_megabytes})"
-      puts "Accessible To: #{args[:distribution_lists]}" if environment.has_entry? :distribution_lists
-      puts "Notifying team members" if environment.has_entry? :notify
+      puts "File: #{ipa_file} (#{bytes_to_human_size File.size?(ipa_file)})"
+      puts "Accessible To: #{environment[:distribution_lists].join(", ")}" if environment.has_entry? :distribution_lists
+      puts "After publish will notify team members" if environment.has_entry? :notify
       
       log_file = File.join environment[:build_dir], "testflight.log"
-      run_command "curl --progress-bar #{arg_string} http://testflightapp.com/api/builds.json", :results => log_file
+      run_command "curl --progress-bar #{curl_arg_string} http://testflightapp.com/api/builds.json", :results => log_file
     end
 
   end

@@ -41,7 +41,7 @@ module Wox
       environment.apply options do |e|
         t = nil
         namespace :build do
-          desc "Build #{e.full_name} with #{e[:configuration]} configuration"
+          desc "Build #{e[:full_name]} with #{e[:configuration]} configuration"
           t = task(name) { Builder.new(e).build }
         end
         tasks = BuildTasks.new(e, t)
@@ -57,7 +57,7 @@ module Wox
       environment.apply options.merge({:ipa_name => name}) do |e|
         t = nil
         namespace :ipa do
-          desc "Creates #{e.ipa_file}"
+          desc "Creates #{e[:ipa_file]}"
           t = task(name => parent_task) { Packager.new(e).package }
         end
         
@@ -73,7 +73,7 @@ module Wox
     def testflight name, options
       environment.apply options do |e|
         namespace :testflight do
-          desc "Publishes #{e.ipa_file} to testflight"
+          desc "Publishes #{e[:ipa_file]} to testflight"
           task(name => parent_task) { TestFlight.new(e).publish }
         end
       end

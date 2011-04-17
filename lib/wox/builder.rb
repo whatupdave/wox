@@ -5,7 +5,7 @@ module Wox
     
     def build
       configuration = environment[:configuration]
-      puts "Building #{environment.full_name} configuration:#{configuration}"
+      puts "Building #{environment[:full_name]} configuration:#{configuration}"
       
       log_file = File.join environment[:build_dir], "build-#{configuration}.log"
 
