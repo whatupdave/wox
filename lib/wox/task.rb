@@ -9,7 +9,7 @@ module Wox
         puts "Success. Results in #{options[:results]}"
         puts
       else
-        system "cat #{options[:results]}"
+        fail exec "cat #{options[:results]}"
       end
     end
     
