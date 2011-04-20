@@ -22,6 +22,7 @@ module Wox
       options[:sdk] ||= 'iphoneos'
       options[:configuration] ||= 'Release'
       options[:target] ||= targets.first
+      options[:app_file] ||= self[:project_name]
       
       if options[:ipa_name]
         options[:ipa_file] ||= File.join self[:build_dir], 
