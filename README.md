@@ -80,6 +80,20 @@ You'll need to sign up to [TestFlight](http://testflightapp.com) to get your API
 
 Also check your development certificate and provisioning profile from inside Xcode.
 
+## Available options
+
+The following options can be set at any level and will be inherited by child tasks.
+
+ * :info_plist        Default: 'Resources/Info.plist'
+ * :version           Default: 'CFBundleVersion' from info plist file
+ * :target            Default: first target in xcode
+ * :sdk               Default: 'iphoneos'
+ * :build_dir         Default: 'build'
+ * :configuration     Default: 'Release'
+ * :project_name      Default: project name from xcode
+ * :app_file          Default: project_name
+ * :ipa_name          Default: 'project_name-version-configuration-ipa_name'
+
 ## Wrapping up
 
 This is very much a WIP! So please log any bugs or feedback you might have and feel free to fork and go nuts!
