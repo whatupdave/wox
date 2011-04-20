@@ -54,7 +54,7 @@ module Wox
       @targets ||= begin
         start_line = xcodebuild_list.find_index{ |l| l =~ /targets/i } + 1
         end_line = xcodebuild_list.find_index{ |l| l =~ /configurations/i } - 1
-        xcodebuild_list.slice start_line...end_line
+        xcodebuild_list.slice(start_line...end_line).map{|l| l.gsub('(Active)','').strip }
       end
     end
     
