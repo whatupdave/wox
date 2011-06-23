@@ -23,6 +23,7 @@ Then run the bundle command:
 Now, create a Rakefile (unless you already have one!):
     
     # Rakefile
+    include Rake::DSL
     require 'bundler'
     Bundler.require
 
