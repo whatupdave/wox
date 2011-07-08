@@ -23,6 +23,7 @@ Then run the bundle command:
 Now, create a Rakefile (unless you already have one!):
     
     # Rakefile
+    include Rake::DSL
     require 'bundler'
     Bundler.require
 
@@ -47,6 +48,10 @@ If you get an error you might need to check the path of the info plist file. We 
 Ok so there's a few more things you can do, like creating ipa files and publishing to TestFlight. That looks like this:
 
     # Rakefile
+    include Rake::DSL
+    require 'bundler'
+    Bundler.require
+
     Wox::Tasks.create :info_plist => 'Resources/Info.plist', :sdk => 'iphoneos', :configuration => 'Release' do
       build :debug, :configuration => 'Debug'
 
