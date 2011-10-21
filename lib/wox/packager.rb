@@ -11,7 +11,7 @@ module Wox
       fail "Couldn't find #{app_file}" unless File.exists? app_file
     
       provisioning_profile_file = find_matching_mobile_provision environment[:provisioning_profile]
-      fail "Unable to find matching provisioning profile for '#{options[:provisioning_profile]}'" if provisioning_profile_file.empty?
+      fail "Unable to find matching provisioning profile for '#{environment[:provisioning_profile]}'" if provisioning_profile_file.empty?
           
       puts "Creating #{ipa_file}"
       log_file = File.join build_dir, "ipa.log"
