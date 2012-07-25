@@ -9,7 +9,7 @@ module Wox
       
       log_file = File.join environment[:build_dir], "build-#{configuration}.log"
 
-      run_command "xcodebuild -#{environment[:target_or_scheme]} '#{environment[:target]}' -configuration #{configuration}", :results => log_file
+      run_command "xcodebuild -#{environment[:target_or_scheme]} '#{environment[:target]}' -configuration #{configuration} BUILD_DIR=#{environment[:build_dir]} clean build", :results => log_file
     end
   end
 end
